@@ -1,9 +1,3 @@
-let font,
-  fontsize = 72
-function preload() {
-  font = loadFont('fonts/Cooper Becker Black Cond Regular.ttf');
-}
-
 let tableData
 let cleanData
 let table
@@ -24,13 +18,17 @@ function preload() {
   tableData = loadTable('data/climate-dta-temp-average.csv', 'csv', 'header');
   }
 
+
 function setup() {
-createCanvas(1200, 1200);
+createCanvas(1200, 1280);
 noiseSeed(25);
 colorMode(HSB)
+// Set text characteristics
+
 // background(20,50,20)
 strokeWeight(1.35)
 // frameRate(1)
+
 
 cleanData = tableData.rows.map( function(eintrag, index) {
   const obj = eintrag.obj // falsch beschriftet
@@ -55,8 +53,8 @@ console.log(cleanData)
 
 function draw() {
   background(220)
-  translate(width/2, height/2)
-  noFill()
+  translate(width/2, height/2 + 80)
+  noFill();
 
   cleanData.forEach(function(eintrag, index) {
     // Loop durch die «sauberen» Daten
@@ -66,7 +64,6 @@ function draw() {
     const radius = eintrag.radius
     const precipitation = eintrag.precipitation;
 
-    
     // push()
     // Hier beginnt die Zeichnung der Kreise
     stroke(hue, 100, 100)
@@ -117,8 +114,8 @@ function draw() {
 
         // Hier beginnt der Text zu den Ringen
         push();
-        if (index <= ringIndex) {   // Mit <= bleibt der Txt stehen
-          fill(100, 100, 100);
+        if (index <= ringIndex) {   // Mit <= bleibt der Text stehen
+          fill(100, 100, 100);  
           stroke(hue, 100, 100);
           strokeWeight(14);
           strokeJoin(ROUND);
@@ -130,6 +127,32 @@ function draw() {
         }
         pop();
     
+  // Headline 1
+  push();
+  if (ringIndex > 145) {   // Mit <= bleibt der Text stehen
+    fill(85, 100, 100);
+    stroke(hue, 100, 100);
+    strokeWeight(30);
+    strokeJoin(ROUND);
+    textSize(112);
+    textStyle(BOLD);
+    text("some like it hot", -500, -540)
+  }
+  pop();
+
+  // Headline 2
+  push();
+  if (ringIndex > 157) {   // Mit <= bleibt der Text stehen
+    fill(100, 0, 0);
+    stroke(hue, 100, 100);
+    strokeWeight(64);
+    strokeJoin(ROUND);
+    textSize(112);
+    textStyle(BOLD);
+    text("conifers don't !", -500, -540)
+  }
+  pop();
+
   });
 
   // noLoop();
@@ -137,7 +160,7 @@ function draw() {
 
   ringIndex = (ringIndex + 1)
 
-  if (ringIndex >= 159) {//Fehler stoppt die Bewgung am Schluss
+  if (ringIndex >= 159) {//Fehler stoppt die Bewegung am Schluss
     ringIndex = (index)
   } 
 }
